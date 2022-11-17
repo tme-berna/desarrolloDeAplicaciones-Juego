@@ -1,11 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import Header from './components/Header';
+import StartGameScreen from './screens/StartGameScreen';
+import GameScreen from './screens/GameScreen';
 
 export default function App() {
+  const [UseNumber, setUseNumber] = useState();
+
+  const handleStartGame = (selectedNumber) => {
+    setUseNumber(selectedNumber);
+  };
+
+  let content = <StartGameScreen onStartGame={handleStartGame}></StartGameScreen>;
+
+  if (UseNumber) {
+    content = <GameScreen></GameScreen>;
+  }
+
+  if(!loaded) {
+    return null
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Header title={"Guess the number"}></Header>
+      {content}
     </View>
   );
 }
@@ -13,8 +32,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
